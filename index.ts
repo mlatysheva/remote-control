@@ -20,10 +20,10 @@ wss.on('connection', ws => {
     // we need to extract mouse position
     const { x, y } = robot.getMousePos();
     console.log('received: %s', data);
-    ws.send(`mouse_position ${x,y}`);
+    ws.send(`mouse_position ${x},${y}`);
   });
   const { x, y } = robot.getMousePos();
-  ws.send(`mouse_position is ${x,y}`);
+  ws.send(`mouse_position is ${x},${y}`);
 });
 
 wss.on('close', () => {
