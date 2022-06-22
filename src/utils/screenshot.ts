@@ -1,3 +1,20 @@
+import Jimp from 'jimp';
+import { buffer } from 'stream/consumers';
+
+export function screenshot(x: number, y: number, width: number, height: number) {
+  return new Promise((resolve, reject) => {
+    (buffer: string) => {
+      Jimp.read(buffer, (err, image) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(image);
+      }
+      );
+    };
+  });
+}
+
 // function getScreenshot() {
 //   let red: number, green: number, blue: number;
 //   pic.image.forEach((byte: number, i: number) => {

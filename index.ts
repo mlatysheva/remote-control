@@ -1,7 +1,10 @@
 import Jimp from 'jimp';
-import {httpServer} from './src/http_server/index.js';
+import { httpServer } from './src/http_server/index.js';
 import robot from 'robotjs';
 import WebSocket, { WebSocketServer } from 'ws';
+import { screenshot } from './src/utils/screenshot';
+import { drawRectangle, drawLine2 } from './src/utils/drawRectangle';
+import { drawCircle } from './src/utils/drawCicle';
 
 const HTTP_PORT = 3000;
 
@@ -12,10 +15,10 @@ const wss = new WebSocketServer({
   port: 8080,
 });
 
-// const socket = new WebSocket('ws:localhost:8080');
+// const ws = new WebSocket('ws:localhost:8080');
 
 wss.on('connection', ws => {
-  ws.on('message', data => {
+  ws.on('message', async (data) => {
     
     const { x, y } = robot.getMousePos();
     console.log('received: %s', data);
@@ -24,22 +27,18 @@ wss.on('connection', ws => {
     const [a, b] = args.map((arg) => parseInt(arg));
     switch (command) {
       case ('mouse_up'): {
-        console.log('mouse_up');
         robot.moveMouse(x, y - a);
         break;
       };
       case ('mouse_down'): {
-        console.log('mouse_down');
         robot.moveMouse(x, y + a);
         break;
       };
       case ('mouse_left'): {
-        console.log('mouse_left');
         robot.moveMouse(x - a, y);
         break;
       };
       case ('mouse_right'): {
-        console.log('mouse_right');
         robot.moveMouse(x + a, y);
         break;
       };
@@ -48,30 +47,39 @@ wss.on('connection', ws => {
         break;
       };
       case ('draw_square'): {
-        ws.send(`draw_square is requested with ${x}, ${y}, ${a}`);
+        ws.send(`draw_square ${x},${y} ${a}`);
+        drawRectangle(x, y, a, a);
         break;
       };
       case ('draw_rectangle'): {
-        ws.send(`draw_square is requested with ${x}, ${y}, ${a}, ${b}`);
+        ws.send(`draw_rectangle ${x},${y},${a},${b}`);
+        drawRectangle(x, y, a, b);
         break;
       };
       case ('draw_circle'): {
-        ws.send(`draw_square is requested with ${x}, ${y}, ${a}`);
+        ws.send(`draw_circle ${x},${y},${a}`);
+        drawCircle(a);
         break;
       };
       case ('prnt_scrn'): {
-        ws.send(`prnt_scrn is requested with ${x},${y} and 200px`);
+        const buf = await screenshot(x, y, a, b);
+        console.log(`buf is ${buf}`)
+        ws.send(`prnt_scrn ${buf}`);
         break;
       };
     }
   });
-  // const { x, y } = robot.getMousePos();
-  // ws.send(`mouse_position ${x},${y}`);
+  ws.on('close', () => {});
 });
+
 
 wss.on('close', () => {
 
-});
+}); 
 
 // duplex.push()
 // (x – a)2 + (y – b)2 = r2
+// const duplex = createWebSocketStream(ws, { encoding: 'utf8' });
+
+// duplex.pipe(process.stdout);
+// process.stdin.pipe(duplex);
