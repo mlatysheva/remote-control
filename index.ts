@@ -3,7 +3,7 @@ import { httpServer } from './src/http_server/index.js';
 import robot from 'robotjs';
 import WebSocket, { WebSocketServer } from 'ws';
 import { screenshot } from './src/utils/screenshot';
-import { drawRectangle, drawLine2 } from './src/utils/drawRectangle';
+import { drawRectangle } from './src/utils/drawRectangle';
 import { drawCircle } from './src/utils/drawCicle';
 
 const HTTP_PORT = 3000;
@@ -58,6 +58,7 @@ wss.on('connection', ws => {
       };
       case ('draw_circle'): {
         ws.send(`draw_circle ${x},${y},${a}`);
+        console.log(`draw_circle ${x},${y},${a}`);
         drawCircle(a);
         break;
       };
