@@ -69,17 +69,9 @@ wss.on('connection', ws => {
       }; 
     }
   });
-  ws.on('close', () => {});
+  ws.on('close', () => { console.log(`WebSocket closed`); });
 });
 
-
 wss.on('close', () => {
-
+  console.log(`WebSocketServer closed`);
 }); 
-
-// duplex.push()
-// (x – a)2 + (y – b)2 = r2
-// const duplex = createWebSocketStream(ws, { encoding: 'utf8' });
-
-// duplex.pipe(process.stdout);
-// process.stdin.pipe(duplex);
