@@ -2,7 +2,7 @@ import Jimp from 'jimp';
 import { httpServer } from './src/http_server/index.js';
 import robot from 'robotjs';
 import WebSocket, { WebSocketServer } from 'ws';
-import { printScreen, base64shot, makePrintScreen, displayImage } from './src/utils/screenshot';
+import { getScreenshot, showImage } from './src/utils/screenshot';
 import { drawRectangle } from './src/utils/drawRectangle';
 import { drawCircle } from './src/utils/drawCicle';
 
@@ -23,7 +23,6 @@ wss.on('connection', ws => {
     const { x, y } = robot.getMousePos();
     console.log('received: %s', data);
     const [ command, ...args ] = data.toString().split(' ');
-    console.log(`command is ${command}`);
     const [a, b] = args.map((arg) => parseInt(arg));
     switch (command) {
       case ('mouse_up'): {
@@ -63,10 +62,8 @@ wss.on('connection', ws => {
         break;
       };
       case ('prnt_scrn'): {    
-        const buf = await base64shot(x, y, 200, 200);
-        // const buf = await makePrintScreen(x, y, 200, 200);
-        // const buf = await displayImage(x, y, 200, 200);
-        console.log(`in prnt_scrn buf is ${buf}`);
+        const buf = await showImage(x, y, 200, 200);
+        getScreenshot(x, y, 200, 200);
         ws.send(`prnt_scrn ${buf}`);
         break;
       }; 
