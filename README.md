@@ -1,9 +1,11 @@
-# RSSchool NodeJS websocket task template
-> Static http server and base task packages.
+# Remote Control: RSSchool NodeJS websocket task
+
+> This is a project implementing remote control backend using `RobotJS` library and `websocket`. The front end was provided [here](https://github.com/rolling-scopes-school/remote-control) and accepts commands from the user and sends them to the websocket client, which communicates with the websocket server that handles the commands.
+The user can move the cursor (mouse) with arrow keys, get the current coordinates of the cursor, make the cursor draw a circle, square or rectangle, and make a screenshot of the front end computer.
 
 ## Installation
-1. Clone/download repo
-2. Run `npm install` to install all dependencies
+1. Clone the repo /download the `develop` branch.
+2. Run `npm install` to install all dependencies.
 
 ## Usage
 
@@ -11,13 +13,13 @@
 
 `npm run start:dev`
 
-* App served @ `http://localhost:8180` with ts-node-dev
+* Front-end app is served @ `http://localhost:3000` with ts-node-dev, with websocket server running on http://localhost:8080
 
 **Production**
 
 `npm run start`
 
-* App served @ `http://localhost:8180` with node
+* Front-end app is served @ `http://localhost:3000` with node, with websocket server running on http://localhost:8080
 
 ---
 
@@ -25,25 +27,20 @@
 
 Command | Description
 --- | ---
-`npm run start:dev` | App served @ `http://localhost:8180` with ts-node-dev
-`npm run start` | App served @ `http://localhost:8180` with node
+`npm run start:dev` | App served @ `http://localhost:3000` with ts-node-dev
+`npm run start` | App served @ `http://localhost:3000` with node
 
-# Assignment: Websocket Remote Control
 
 ## Description
 
-Your task is to implement remote control backend using `RobotJS` library and websocket.
+The backend is able to do the following:
 
-User interface for your remote control backend is [here](https://github.com/rolling-scopes-school/remote-control)
-
-The backend should be able to do the following:
-
-- Start websocket server
-- Handle websocket connection
+- Start the websocket server
+- Handle the websocket connection
 - Move mouse (Up, Down, Left, Right)
 - Draw circle, rectangle and square  
 - Send current mouse coordinates
-- Send desktop capture (optionally)
+- Send desktop capture
 
 ## Technical requirements
 
@@ -51,12 +48,17 @@ The backend should be able to do the following:
 - 16 LTS version of Node.js was used
 - Only [ws](https://www.npmjs.com/package/ws), [robotjs](https://www.npmjs.com/package/robotjs), [jimp](https://www.npmjs.com/package/jimp), `typescript` and `ts-node-dev` were used.
 - The program is started by npm script `start` in following way:
+  - in production mode:
 ```bash
-npm run start 
+npm run start
 ```
-- After starting the program displays websocket parameters
-- After program work finished the program ends websocket work correctly  
-- After each received command the program displays the command and results
+  - in development mode:
+  ```bash
+  npm run start:dev
+  ```
+- After starting, the program displays websocket parameters
+- After the program work is finished, the program ends websocket work correctly  
+- After each received command, the program displays the command and results
 - All commands are ended with **\0**
 
 List of websocket commands and their syntax (<- - cmd from frontend, -> - answer):
