@@ -2,7 +2,7 @@ import Jimp from 'jimp';
 import { httpServer } from './src/http_server/index.js';
 import robot from 'robotjs';
 import WebSocket, { WebSocketServer } from 'ws';
-import { screenshot } from './src/utils/screenshot';
+import { printScreen, base64shot, makePrintScreen, displayImage } from './src/utils/screenshot';
 import { drawRectangle } from './src/utils/drawRectangle';
 import { drawCircle } from './src/utils/drawCicle';
 
@@ -62,12 +62,14 @@ wss.on('connection', ws => {
         drawCircle(a);
         break;
       };
-      case ('prnt_scrn'): {
-        const buf = await screenshot(x, y, a, b);
-        console.log(`buf is ${buf}`)
+      case ('prnt_scrn'): {    
+        const buf = await base64shot(x, y, 200, 200);
+        // const buf = await makePrintScreen(x, y, 200, 200);
+        // const buf = await displayImage(x, y, 200, 200);
+        console.log(`in prnt_scrn buf is ${buf}`);
         ws.send(`prnt_scrn ${buf}`);
         break;
-      };
+      }; 
     }
   });
   ws.on('close', () => {});
