@@ -46,7 +46,7 @@ The backend is able to do the following:
 
 - The task is implemented with Typescript
 - 16 LTS version of Node.js was used
-- Only [ws](https://www.npmjs.com/package/ws), [robotjs](https://www.npmjs.com/package/robotjs), [jimp](https://www.npmjs.com/package/jimp), `typescript` and `ts-node-dev` were used.
+- Only [ws](https://www.npmjs.com/package/ws), [robotjs](https://www.npmjs.com/package/robotjs), [jimp](https://www.npmjs.com/package/jimp), `dotenv`, `typescript` and `ts-node-dev` were used.
 - The program is started by npm script `start` in following way:
   - in production mode:
 ```bash
