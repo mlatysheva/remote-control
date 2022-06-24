@@ -8,7 +8,7 @@ import { cwd } from 'process';
 import { moveMouse } from './src/utils/moveMouse';
 import { drawShape } from './src/utils/drawShape';
 
-dotenv.config({ path: resolve(cwd(), '.env') })
+dotenv.config({ path: resolve(cwd(), '.env') });
 
 const HTTP_PORT = process.env.HTTP_PORT || 3000;
 const WSS_PORT = Number(process.env.WSS_PORT) || 8080;
@@ -75,7 +75,10 @@ wss.on('connection', ws => {
       } 
     }
   });
-  ws.on('close', () => { console.log(`WebSocket closed`); });
+  ws.on('close', (data) => { 
+    ws.terminate();
+    console.log(`WebSocket closed`);
+  });
 });
 
 wss.on('close', () => {
