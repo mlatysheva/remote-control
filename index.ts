@@ -1,7 +1,7 @@
 import { httpServer } from './src/http_server/index';
 import dotenv from 'dotenv';
 import robot from 'robotjs';
-import { WebSocketServer } from 'ws';
+import { createWebSocketStream, WebSocketServer } from 'ws';
 import { showImage } from './src/utils/screenshot';
 import { resolve } from 'path';
 import { cwd } from 'process';
@@ -24,6 +24,7 @@ const wss = new WebSocketServer({
 console.log(`Websocket server is running on ${WSS_PORT} port.`);
 
 wss.on('connection', ws => {
+  
   ws.on('message', async (data) => {
     
     const { x, y } = robot.getMousePos();

@@ -3,7 +3,7 @@ import robot from 'robotjs';
 
 export function getScreenshot(x: number, y: number, width: number, height: number) {
   try {
-    const img = robot.screen.capture(x, y , width, height);
+    const img = robot.screen.capture((x - width/2), (y - width/2) , width, height);
     const screenshot = new Jimp({
       data: img.image,
       width: img.width,
@@ -14,7 +14,7 @@ export function getScreenshot(x: number, y: number, width: number, height: numbe
       } else {
         image.write("./screen.png");
       }
-    });
+    });    
     return screenshot;
   } catch (error) {
     console.error(error);
