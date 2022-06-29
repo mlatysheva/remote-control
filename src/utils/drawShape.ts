@@ -1,8 +1,9 @@
+import { Duplex } from 'stream';
 import { drawCircle } from './drawCicle';
 import { drawRectangle } from './drawRectangle';
 
-export function drawShape(ws: { send: (arg0: string) => void; }, command: string, x: number, y: number, a: number, b=a) {
-  ws.send(`draw_${command} ${x},${y},${a}\0`);
+export function drawShape(duplex: Duplex, command: string, x: number, y: number, a: number, b=a) {
+  duplex.write(`draw_${command} ${x},${y},${a}\0`);
   switch(command) {
     case 'square': {
       drawRectangle(x, y, a, a);
